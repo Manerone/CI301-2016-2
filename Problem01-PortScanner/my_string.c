@@ -12,7 +12,7 @@
 
 typedef struct String {
         char* characters;
-        int size;
+        uint size;
 } String;
 
 
