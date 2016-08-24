@@ -10,6 +10,12 @@
  */
 
 
+// Struct that will hold the array of chars that is a string.
+//
+// Elements:
+// 		+characters+: [char*] Array of chars that will be the string,
+// 						it always and with '\0'.
+// 		+size+: [uint] Size of the string minus the '\0' at the end.
 typedef struct String {
         char* characters;
         uint size;
