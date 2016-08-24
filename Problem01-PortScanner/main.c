@@ -1,5 +1,4 @@
 #include "stdio.h"
-#include "my_string.c"
 #include "data.c"
 
 int main(int argc, char *argv[]) {

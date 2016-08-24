@@ -1,6 +1,19 @@
+#include "my_string.c"
 
 const char DOT = '.';
 
+
+// Struct with the information on the data that will be used on the
+// port scanner
+//
+// Elements:
+// 		+base_ip+: (String*) Pointer to struct String that will cointain
+// 						the base ip of the possibles ips, for example the
+// 						base ip of 192.122.111.160 is 192.122.111.
+// 		+ip_start+: (uint) Starting ip range.
+// 		+ip_end+: (uint) Ending ip range.
+// 		+port_start+: (uint) Starting port range.
+// 		+port_end+: (uint) Ending port range.
 typedef struct data
 {
 	String* base_ip;
