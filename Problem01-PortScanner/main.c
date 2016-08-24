@@ -21,8 +21,7 @@ void get_base_ip_and_ip_range(Data* data, char* ip){
 	// Find the base ip, in 192.134.122.52
 	// the base ip is 192.134.122.
 	while(dots_found < number_of_dots_in_a_base_ip){
-		if (ip[index] == DOT)
-			dots_found++;
+		if (ip[index] == DOT) dots_found++;
 		String_add_element(data->base_ip, ip[index]);
 		index++;
 	}
@@ -33,14 +32,12 @@ void get_base_ip_and_ip_range(Data* data, char* ip){
 	}
 	data->ip_start = String_to_int(ip_start);
 	// Find the end ip range, if there is any
-	if (ip[index] == '\0')
-		data->ip_end = data->ip_start;
-	else if (ip[index] == '-')
+	if (ip[index] == '\0') data->ip_end = data->ip_start;
+	else if(ip[index] == '-')
 	{
-		index++;
 		while(ip[index] != '\0'){
-			String_add_element(ip_end, ip[index]);
 			index++;
+			String_add_element(ip_end, ip[index]);
 		}
 		data->ip_end = String_to_int(ip_end);
 	}
@@ -50,9 +47,6 @@ Data* get_data(int argc, char *argv[]){
 	Data* data = malloc(sizeof(Data));
 	data->base_ip = String_new();
 	get_base_ip_and_ip_range(data, argv[1]);
-	printf("%s\n", data->base_ip->characters);
-	printf("%d\n", data->ip_start);
-	printf("%d\n", data->ip_end);
 	return data;
 }
 
