@@ -96,3 +96,17 @@ void String_add_element(String* string, char character) {
         string->characters[string->size+1] = '\0';
         string->size++;
 }
+
+// Transforms a string to integer
+//
+// Parameters:
+//      +string+: String pointer that will be transformed to integer.
+//
+// Examples:
+//      String* my_string = String_new_from("12", 2);
+//      int number = String_to_int(my_string);
+//      printf("%d", number);
+//          > 12
+int String_to_int(String* string){
+        return atoi(string->characters);
+}
