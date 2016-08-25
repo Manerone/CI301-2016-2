@@ -13,9 +13,9 @@
 // Struct that will hold the array of chars that is a string.
 //
 // Elements:
-// 		+characters+: [char*] Array of chars that will be the string,
+// 	+characters+: [char*] Array of chars that will be the string,
 // 						it always and with '\0'.
-// 		+size+: [uint] Size of the string minus the '\0' at the end.
+// 	+size+: [uint] Size of the string minus the '\0' at the end.
 typedef struct String {
         char* characters;
         uint size;
@@ -77,8 +77,8 @@ String* String_new_from(char* characters, int size){
 // Adds a char to the end of the provided string.
 //
 // Parameters:
-// +string+: Pointer to String object that will receive the char.
-// +character+: Char that will be added to the String.
+//  +string+: Pointer to String object that will receive the char.
+//  +character+: Char that will be added to the String.
 //
 // Examples:
 //      String* my_string = String_new_from("abc", 3);
@@ -100,7 +100,7 @@ void String_add_element(String* string, char character) {
 // Transforms a string to integer
 //
 // Parameters:
-//      +string+: String pointer that will be transformed to integer.
+//  +string+: String pointer that will be transformed to integer.
 //
 // Examples:
 //      String* my_string = String_new_from("12", 2);
