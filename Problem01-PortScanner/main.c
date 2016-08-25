@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <netdb.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <time.h>
@@ -10,7 +11,6 @@ void scan(char* ip, int port){
         int sock;
         struct sockaddr_in sa;
         int connection;
-        char buffer[4096];
         memset(&sa, 0, sizeof(sa));
         sa.sin_family = AF_INET;
         sa.sin_addr.s_addr = inet_addr(ip);
@@ -21,23 +21,21 @@ void scan(char* ip, int port){
                 return;
         }
         connection = connect(sock, (struct sockaddr*)&sa, sizeof(sa));
-        if (connection >= 0) {
-                memset(buffer, 0, sizeof(buffer));
-                strcpy(buffer, "nothing\r\n");
-                connection = write(sock, buffer, strlen(buffer));
-                if(connection < 0) return;
-                bzero(buffer, 4096);
-                connection = read(sock, buffer, 4096);
-                if(connection < 0) return;
-                printf("%s\t%d\t%s\n", ip, port, buffer);
+        if (connection != -1) {
+                char host[1024];
+                char service[1024];
+                getnameinfo((struct sockaddr*)&sa, sizeof(sa),
+                            host, sizeof(host),
+                            service, sizeof(service), 0);
+                printf("%s\t%d\t%s\n", ip, port, service);
         }
         close(sock);
 }
 
 char* timestamp(){
-    time_t ltime; /* calendar time */
-    ltime=time(NULL); /* get current cal time */
-    return asctime( localtime(&ltime) );
+        time_t ltime;
+        ltime=time(NULL);
+        return asctime( localtime(&ltime) );
 }
 
 int main(int argc, char *argv[]) {
