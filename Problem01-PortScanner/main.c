@@ -17,16 +17,13 @@ int main(int argc, char *argv[]) {
             final_part_of_ip = String_int_to_string(current_ip);
             ip = String_concat(data->base_ip, final_part_of_ip);
             memset(&sa, 0, sizeof(sa));
+            sa.sin_family = AF_INET;
+            sa.sin_addr.s_addr = inet_addr(ip);
             for (uint port = data->port_start; port <= data->port_end; ++port) {
-                printf("%s\t%d\t", ip, port);
-                fflush(stdout);
-                sa.sin_family = AF_INET;
-                sa.sin_addr.s_addr = inet_addr(ip);
                 sa.sin_port = htons(port);
                 sock = socket(AF_INET, SOCK_STREAM, 0);
                 connection = connect(sock, (struct sockaddr*)&sa, sizeof(sa));
                 if (connection >= 0) {
-                    printf("Open\n");
                     memset(buffer, 0, sizeof(buffer));
                     strcpy(buffer, "garbage\r\n");
                     connection = write(sock, buffer, strlen(buffer));
@@ -38,7 +35,7 @@ int main(int argc, char *argv[]) {
                     if(connection < 0) {
                         printf("[-]Error reading (Port closed maybe?!)\n");
                     }
-                    fprintf(stdout,"[*]%s\n", buffer);
+                    printf("%s\t%d\t%s\n", ip, port, buffer);
                 }
                 close(sock);
             }
