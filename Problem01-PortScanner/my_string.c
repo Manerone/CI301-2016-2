@@ -121,7 +121,7 @@ String* String_int_to_string(int integer){
 
 char* String_concat(String* string1, String* string2){
     uint size = string1->size + string2->size + 1;
-    char* concated_string = malloc(size*sizeof(char));
+    char* concated_string = calloc(size, sizeof(char));
     strcat(concated_string, string1->characters);
     strcat(concated_string, string2->characters);
     return concated_string;
