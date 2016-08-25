@@ -110,3 +110,11 @@ void String_add_element(String* string, char character) {
 int String_to_int(String* string){
         return atoi(string->characters);
 }
+
+char* String_concat(String* string, char* string_to_concat){
+    uint size = string->size+strlen(string_to_concat)+1;
+    char* concated_string = malloc(size*sizeof(char));
+    strcat(concated_string, string->characters);
+    strcat(concated_string, string_to_concat);
+    return concated_string;
+}
