@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
 /*
@@ -111,10 +112,17 @@ int String_to_int(String* string){
         return atoi(string->characters);
 }
 
-char* String_concat(String* string, char* string_to_concat){
-    uint size = string->size+strlen(string_to_concat)+1;
+
+String* String_int_to_string(int integer){
+    char to_string[10];
+    sprintf(to_string, "%d", integer);
+    return String_new_from(to_string, strlen(to_string));
+}
+
+char* String_concat(String* string1, String* string2){
+    uint size = string1->size + string2->size + 1;
     char* concated_string = malloc(size*sizeof(char));
-    strcat(concated_string, string->characters);
-    strcat(concated_string, string_to_concat);
+    strcat(concated_string, string1->characters);
+    strcat(concated_string, string2->characters);
     return concated_string;
 }
