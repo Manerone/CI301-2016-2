@@ -23,6 +23,11 @@ typedef struct data
 	uint port_end;
 } Data;
 
+// Gets the ip range and the base ip
+// Parameters:
+//  +data+: Pointer to data that will contain the ip range and ip base.
+//  +ip+: String to parse the information, it should be like this,
+//          192.162.182.142-240
 void get_base_ip_and_ip_range(Data* data, char* ip){
 	uint number_of_dots_in_a_base_ip = 3;
 	uint dots_found = 0;
@@ -53,6 +58,11 @@ void get_base_ip_and_ip_range(Data* data, char* ip){
 	}
 }
 
+// Gets the port range
+// Parameters:
+//  +data+: Pointer to Data that will will receive the port range.
+//  +ports+: String to parse the port, it should be like this,
+//              32-5000
 void get_port_range(Data* data, char* ports){
 	uint index = 0;
 	String* port_start = String_new();
@@ -75,6 +85,8 @@ void get_port_range(Data* data, char* ports){
 	}
 }
 
+// Receive the argc and argv from main and parse the base ip,
+// the ip range and the port range
 Data* get_data(int argc, char *argv[]){
 	Data* data = malloc(sizeof(Data));
 	data->base_ip = String_new();
@@ -88,6 +100,7 @@ Data* get_data(int argc, char *argv[]){
 	return data;
 }
 
+// Print the values of the Data pointer.
 void print_data(Data* data){
 	printf("%s\n", data->base_ip->characters);
 	printf("%d\n", data->ip_start);
