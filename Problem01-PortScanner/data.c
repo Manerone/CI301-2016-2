@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include "my_string.c"
 
 const char DOT = '.';
