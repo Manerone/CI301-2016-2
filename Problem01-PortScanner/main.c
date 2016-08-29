@@ -8,6 +8,7 @@
 #include "data.c"
 
 void scan(char* ip, int port){
+    printf("%d\n", port);
         int sock;
         struct sockaddr_in sa;
         int connection;
@@ -22,12 +23,18 @@ void scan(char* ip, int port){
         }
         connection = connect(sock, (struct sockaddr*)&sa, sizeof(sa));
         if (connection != -1) {
-                char host[1024];
-                char service[1024];
-                getnameinfo((struct sockaddr*)&sa, sizeof(sa),
-                            host, sizeof(host),
-                            service, sizeof(service), 0);
-                printf("%s\t%d\t%s\n", ip, port, service);
+                char buffer[4096];
+                char garbage[] = "garbage\r\n";
+                write(sock, garbage, strlen(garbage));
+                memset(buffer, 0, sizeof(buffer));
+                read(sock, buffer, sizeof(buffer));
+                printf("%s\t%d\t%s\n", ip, port, buffer);
+                // char host[1024];
+                // char service[1024];
+                // getnameinfo((struct sockaddr*)&sa, sizeof(sa),
+                //             host, sizeof(host),
+                //             service, sizeof(service), 0);
+                // printf("%s\t%d\t%s\t%s\n", ip, port, service);
         }
         close(sock);
 }

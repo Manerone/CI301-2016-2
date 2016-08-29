@@ -95,7 +95,7 @@ Data* get_data(int argc, char *argv[]){
 	if (argc > 2)
 		get_port_range(data, argv[2]);
 	else{
-		data->port_start = 0;
+		data->port_start = 1;
 		data->port_end = 65535;
 	}
 	return data;
