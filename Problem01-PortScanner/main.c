@@ -6,9 +6,12 @@
 #include <unistd.h>
 #include <time.h>
 #include "data.c"
-
+// http://developerweb.net/viewtopic.php?id=3196
 void scan(char* ip, int port){
-    printf("%d\n", port);
+    // printf("%d\n", port);
+        struct timeval timeout;      
+        timeout.tv_sec = 10;
+        timeout.tv_usec = 0;
         int sock;
         struct sockaddr_in sa;
         int connection;
@@ -16,10 +19,15 @@ void scan(char* ip, int port){
         sa.sin_family = AF_INET;
         sa.sin_addr.s_addr = inet_addr(ip);
         sa.sin_port = htons(port);
-        sock = socket(AF_INET, SOCK_STREAM, 0);
+        sock = socket(AF_INET, SOCK_STREAM, 6);
         if(sock < 0) {
                 fprintf(stderr, "Cannot create socket");
                 return;
+        }
+        if (setsockopt (sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+        {
+            fprintf(stderr, "setsockopt failed\n");
+            return;
         }
         connection = connect(sock, (struct sockaddr*)&sa, sizeof(sa));
         if (connection != -1) {
@@ -34,7 +42,7 @@ void scan(char* ip, int port){
                 // getnameinfo((struct sockaddr*)&sa, sizeof(sa),
                 //             host, sizeof(host),
                 //             service, sizeof(service), 0);
-                // printf("%s\t%d\t%s\t%s\n", ip, port, service);
+                // printf("%s\t%d\t%s\n", ip, port, service);
         }
         close(sock);
 }
