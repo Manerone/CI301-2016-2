@@ -24,17 +24,26 @@ void scan(char* ip, int port){
         }
         if (setsockopt (sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
         {
-            fprintf(stderr, "setsockopt failed\n");
-            return;
+                fprintf(stderr, "setsockopt failed\n");
+                return;
         }
         connection = connect(sock, (struct sockaddr*)&sa, sizeof(sa));
         if (connection != -1) {
                 char buffer[4096];
-                char garbage[] = "garbage\r\n";
-                write(sock, garbage, strlen(garbage));
+                write(sock, "garbage\r\n", strlen("garbage\r\n"));
                 memset(buffer, 0, sizeof(buffer));
                 read(sock, buffer, sizeof(buffer));
-                printf("%s\t%d\t%s\n", ip, port, buffer);
+                if (strlen(buffer) == 0) {
+                  char host[1024];
+                  char service[1024];
+                  getnameinfo((struct sockaddr*)&sa, sizeof(sa),
+                              host, sizeof(host),
+                              service, sizeof(service), 0);
+                  printf("%s\t%d\t%s\n", ip, port, service);
+                }
+                else{
+                  printf("%s\t%d\t%s\n", ip, port, buffer);
+                }
         }
         close(sock);
 }
@@ -51,9 +60,9 @@ int main(int argc, char *argv[]) {
         printf("Varredura iniciada em %s\n", timestamp());
         printf("IP:%s\n", argv[1]);
         if (argc > 2) {
-          printf("Portas:%s\n", argv[2]);
+                printf("Portas:%s\n", argv[2]);
         }else{
-          printf("Portas:%d-%d\n", 1,65535);
+                printf("Portas:%d-%d\n", 1,65535);
         }
         puts("---");
         for (uint current_ip = data->ip_start; current_ip <= data->ip_end; ++current_ip) {
