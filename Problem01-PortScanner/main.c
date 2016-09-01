@@ -6,10 +6,8 @@
 #include <unistd.h>
 #include <time.h>
 #include "data.c"
-// http://developerweb.net/viewtopic.php?id=3196
 void scan(char* ip, int port){
-    // printf("%d\n", port);
-        struct timeval timeout;      
+        struct timeval timeout;
         timeout.tv_sec = 10;
         timeout.tv_usec = 0;
         int sock;
@@ -37,12 +35,6 @@ void scan(char* ip, int port){
                 memset(buffer, 0, sizeof(buffer));
                 read(sock, buffer, sizeof(buffer));
                 printf("%s\t%d\t%s\n", ip, port, buffer);
-                // char host[1024];
-                // char service[1024];
-                // getnameinfo((struct sockaddr*)&sa, sizeof(sa),
-                //             host, sizeof(host),
-                //             service, sizeof(service), 0);
-                // printf("%s\t%d\t%s\n", ip, port, service);
         }
         close(sock);
 }
