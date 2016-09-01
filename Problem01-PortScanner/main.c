@@ -49,6 +49,12 @@ int main(int argc, char *argv[]) {
         Data* data = get_data(argc, argv);
         char* ip;
         printf("Varredura iniciada em %s\n", timestamp());
+        printf("IP:%s\n", argv[1]);
+        if (argc > 2) {
+          printf("Portas:%s\n", argv[2]);
+        }else{
+          printf("Portas:%d-%d\n", 1,65535);
+        }
         for (uint current_ip = data->ip_start; current_ip <= data->ip_end; ++current_ip) {
                 ip = String_concat(data->base_ip,
                                    String_int_to_string(current_ip)
