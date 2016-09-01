@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
         }else{
           printf("Portas:%d-%d\n", 1,65535);
         }
+        puts("---");
         for (uint current_ip = data->ip_start; current_ip <= data->ip_end; ++current_ip) {
                 ip = String_concat(data->base_ip,
                                    String_int_to_string(current_ip)
